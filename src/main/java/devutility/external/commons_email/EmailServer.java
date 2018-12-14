@@ -7,6 +7,9 @@ public class EmailServer {
 	private String password;
 	private boolean SSLOnConnect;
 
+	public EmailServer() {
+	}
+
 	public EmailServer(String host, int port, String userName, String password) {
 		this.host = host;
 		this.port = port;

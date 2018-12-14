@@ -6,7 +6,7 @@ import org.apache.commons.mail.EmailException;
 
 import devutility.internal.test.BaseTest;
 import devutility.internal.test.TestExecutor;
-import devutility.internal.util.PropertiesHelper;
+import devutility.internal.util.PropertiesUtils;
 
 public class SendHtmlEmailTest extends BaseTest {
 	@Override
@@ -18,7 +18,7 @@ public class SendHtmlEmailTest extends BaseTest {
 			helper = CommonsEmailHelper.create("email.properties");
 			helper.setDebug(true);
 
-			emailModel = PropertiesHelper.toModel("email.properties", null, EmailModel.class);
+			emailModel = PropertiesUtils.toModel("email.properties", null, EmailModel.class);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 		}

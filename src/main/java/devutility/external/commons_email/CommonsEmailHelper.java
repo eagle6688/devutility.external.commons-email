@@ -11,7 +11,7 @@ import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.SimpleEmail;
 
-import devutility.internal.util.PropertiesHelper;
+import devutility.internal.util.PropertiesUtils;
 
 public class CommonsEmailHelper {
 	private EmailServer emailServer;
@@ -108,7 +108,7 @@ public class CommonsEmailHelper {
 	}
 
 	public static CommonsEmailHelper create(String propertiesName) throws NumberFormatException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		EmailServer emailServer = PropertiesHelper.toModel(propertiesName, null, EmailServer.class);
+		EmailServer emailServer = PropertiesUtils.toModel(propertiesName, null, EmailServer.class);
 
 		if (emailServer == null) {
 			return null;
