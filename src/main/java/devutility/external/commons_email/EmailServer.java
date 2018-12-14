@@ -5,7 +5,7 @@ public class EmailServer {
 	private int port;
 	private String userName;
 	private String password;
-	private boolean SSLOnConnect;
+	private boolean sslOnConnect;
 
 	public EmailServer() {
 	}
@@ -50,10 +50,10 @@ public class EmailServer {
 	}
 
 	public boolean isSSLOnConnect() {
-		return SSLOnConnect;
+		return sslOnConnect;
 	}
 
-	public void setSSLOnConnect(boolean sSLOnConnect) {
-		SSLOnConnect = sSLOnConnect;
+	public void setSSLOnConnect(boolean sslOnConnect) {
+		this.sslOnConnect = sslOnConnect;
 	}
 }
