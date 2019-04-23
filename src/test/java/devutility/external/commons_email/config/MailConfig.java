@@ -10,7 +10,7 @@ public class MailConfig {
 	public static final String configFile = "email.properties";
 
 	public static Map<String, String> get() {
-		Properties properties = PropertiesUtils.getProperties(configFile);
+		Properties properties = PropertiesUtils.getProperties("email.properties");
 
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("host", PropertiesUtils.getProperty(properties, "host"));
