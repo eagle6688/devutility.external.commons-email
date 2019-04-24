@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailAttachment;
+import org.apache.commons.mail.EmailConstants;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.SimpleEmail;
@@ -157,6 +158,11 @@ public class Mail {
 		this.content = content;
 	}
 
+	public void setHtmlContent(String content) {
+		this.content = content;
+		this.html = true;
+	}
+
 	public List<EmailAttachment> getAttachments() {
 		return attachments;
 	}
@@ -178,7 +184,7 @@ public class Mail {
 
 		if (toEmailMap != null) {
 			for (Map.Entry<String, String> entry : toEmailMap.entrySet()) {
-				email.addTo(entry.getKey(), entry.getValue(), "utf-8");
+				email.addTo(entry.getKey(), entry.getValue(), EmailConstants.UTF_8);
 			}
 		}
 	}
@@ -188,7 +194,7 @@ public class Mail {
 
 		if (copyEmailMap != null) {
 			for (Map.Entry<String, String> entry : copyEmailMap.entrySet()) {
-				email.addCc(entry.getKey(), entry.getValue(), "utf-8");
+				email.addCc(entry.getKey(), entry.getValue(), EmailConstants.UTF_8);
 			}
 		}
 	}
@@ -198,7 +204,7 @@ public class Mail {
 
 		if (bccEmailMap != null) {
 			for (Map.Entry<String, String> entry : bccEmailMap.entrySet()) {
-				email.addBcc(entry.getKey(), entry.getValue(), "utf-8");
+				email.addBcc(entry.getKey(), entry.getValue(), EmailConstants.UTF_8);
 			}
 		}
 	}
@@ -213,8 +219,8 @@ public class Mail {
 		}
 	}
 
-	public void setEmail(Email email) throws EmailException {
-		email.setFrom(getFromEmail(), getFromName(), "utf-8");
+	private void setEmail(Email email) throws EmailException {
+		email.setFrom(getFromEmail(), getFromName(), EmailConstants.UTF_8);
 		setToEmails(email);
 		setCopyEmails(email);
 		setBccEmails(email);

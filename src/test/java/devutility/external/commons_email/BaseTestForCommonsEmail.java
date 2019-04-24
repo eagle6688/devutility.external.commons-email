@@ -9,10 +9,12 @@ import devutility.internal.util.PropertiesUtils;
 public abstract class BaseTestForCommonsEmail extends BaseTest {
 	protected Properties properties = PropertiesUtils.getProperties("email.properties");
 	protected EmailHelper emailHelper;
+	protected String fromEmail = "tester@test.com";
+	protected String fromName = "Tester";
 
 	public BaseTestForCommonsEmail() {
 		try {
-			emailHelper = EmailHelper.create(properties, null);
+			emailHelper = EmailHelper.create(properties, "email");
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 		}

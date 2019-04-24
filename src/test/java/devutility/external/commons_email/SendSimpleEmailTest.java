@@ -1,32 +1,32 @@
 package devutility.external.commons_email;
 
 import java.util.Arrays;
-import java.util.Map;
+import java.util.List;
 
 import org.apache.commons.mail.EmailException;
 
-import devutility.external.commons_email.config.MailConfig;
 import devutility.external.commons_email.model.Mail;
-import devutility.internal.test.BaseTest;
 import devutility.internal.test.TestExecutor;
 
-public class SendSimpleEmailTest extends BaseTest {
+public class SendSimpleEmailTest extends BaseTestForCommonsEmail {
 	@Override
 	public void run() {
-		Map<String, String> map = MailConfig.get();
-		int port = Integer.valueOf(map.get("port"));
-		EmailHelper commonsEmailHelper = new EmailHelper(map.get("host"), port, map.get("userName"), map.get("password"));
+		List<String> toEmails = Arrays.asList("");
+		List<String> copyEmails = Arrays.asList("");
+		List<String> bccEmails = Arrays.asList("");
 
 		Mail mail = new Mail();
-		mail.setFromEmail(map.get("fromEmail"));
-		mail.setToEmails(Arrays.asList(map.get("toEmails").split(",")));
-		mail.setCopyEmails(Arrays.asList(map.get("copyEmails").split(",")));
-		mail.setSubject("Test mail");
-		mail.setContent("Hello world!");
+		mail.setFromName(fromName);
+		mail.setFromEmail(fromEmail);
+		mail.setToEmails(toEmails);
+		mail.setCopyEmails(copyEmails);
+		mail.setBccEmails(bccEmails);
+		mail.setSubject("Test mail 测试邮件");
+		mail.setContent("Hello world!测试邮件！");
 
 		try {
-			commonsEmailHelper.setDebug(true);
-			commonsEmailHelper.send(mail);
+			emailHelper.setDebug(true);
+			emailHelper.send(mail);
 		} catch (EmailException e) {
 			e.printStackTrace();
 		}

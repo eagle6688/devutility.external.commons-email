@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Properties;
 
 import org.apache.commons.mail.Email;
+import org.apache.commons.mail.EmailConstants;
 import org.apache.commons.mail.EmailException;
 
 import devutility.external.commons_email.model.Mail;
@@ -43,15 +44,15 @@ public class EmailHelper {
 
 	private void setEmail(Email email) {
 		emailProperties.setEmail(email);
-		email.setCharset("UTF-8");
+		email.setCharset(EmailConstants.UTF_8);
 		email.setSentDate(new Date());
 		email.setDebug(isDebug());
 	}
 
-	public void send(Mail mail) throws EmailException {
+	public String send(Mail mail) throws EmailException {
 		Email email = mail.toEmail();
 		setEmail(email);
-		email.send();
+		return email.send();
 	}
 
 	public static EmailHelper create(Properties properties, String prefix) throws NumberFormatException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
