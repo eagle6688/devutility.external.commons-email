@@ -17,7 +17,7 @@ public class SendHtmlEmailWithAttachmentTest extends BaseTestForCommonsEmail {
 		List<EmailAttachment> attachments = new LinkedList<>();
 
 		EmailAttachment emailAttachment = new EmailAttachment();
-		emailAttachment.setPath("E:\\Test\\Test2.txt");
+		emailAttachment.setPath("E:\\Test\\测试.txt");
 		attachments.add(emailAttachment);
 
 		Mail mail = new Mail();
