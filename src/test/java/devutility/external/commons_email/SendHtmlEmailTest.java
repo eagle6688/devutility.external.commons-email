@@ -8,13 +8,13 @@ import devutility.internal.test.TestExecutor;
 public class SendHtmlEmailTest extends BaseTestForCommonsEmail {
 	@Override
 	public void run() {
-		Mail emailModel = new Mail();
-		emailModel.setSubject("Test mail");
-		emailModel.setContent("<h2>Hello world!<h2>");
+		Mail mail = new Mail();
+		mail.setSubject("Test mail");
+		mail.setContent("<h2>Hello world!<h2>");
 
 		try {
 			emailHelper.setDebug(true);
-			emailHelper.sendHtmlEmail(emailModel);
+			emailHelper.send(mail);
 		} catch (EmailException e) {
 			e.printStackTrace();
 		}

@@ -4,7 +4,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailAttachment;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
+import org.apache.commons.mail.SimpleEmail;
 
 import devutility.internal.util.CollectionUtils;
 
@@ -71,8 +75,8 @@ public class Mail {
 		if (toEmailMap == null && CollectionUtils.isNotEmpty(toEmails)) {
 			Map<String, String> map = new LinkedHashMap<String, String>();
 
-			for (String toEmail : toEmails) {
-				map.put(toEmail, null);
+			for (String email : toEmails) {
+				map.put(email, null);
 			}
 
 			return map;
@@ -94,6 +98,16 @@ public class Mail {
 	}
 
 	public Map<String, String> getCopyEmailMap() {
+		if (copyEmailMap == null && CollectionUtils.isNotEmpty(copyEmails)) {
+			Map<String, String> map = new LinkedHashMap<String, String>();
+
+			for (String email : copyEmails) {
+				map.put(email, null);
+			}
+
+			return map;
+		}
+
 		return copyEmailMap;
 	}
 
@@ -110,6 +124,16 @@ public class Mail {
 	}
 
 	public Map<String, String> getBccEmailMap() {
+		if (bccEmailMap == null && CollectionUtils.isNotEmpty(bccEmails)) {
+			Map<String, String> map = new LinkedHashMap<String, String>();
+
+			for (String email : bccEmails) {
+				map.put(email, null);
+			}
+
+			return map;
+		}
+
 		return bccEmailMap;
 	}
 
@@ -147,5 +171,76 @@ public class Mail {
 
 	public void setHtml(boolean html) {
 		this.html = html;
+	}
+
+	private void setToEmails(Email email) throws EmailException {
+		Map<String, String> toEmailMap = getToEmailMap();
+
+		if (toEmailMap != null) {
+			for (Map.Entry<String, String> entry : toEmailMap.entrySet()) {
+				email.addTo(entry.getKey(), entry.getValue(), "utf-8");
+			}
+		}
+	}
+
+	private void setCopyEmails(Email email) throws EmailException {
+		Map<String, String> copyEmailMap = getCopyEmailMap();
+
+		if (copyEmailMap != null) {
+			for (Map.Entry<String, String> entry : copyEmailMap.entrySet()) {
+				email.addCc(entry.getKey(), entry.getValue(), "utf-8");
+			}
+		}
+	}
+
+	private void setBccEmails(Email email) throws EmailException {
+		Map<String, String> bccEmailMap = getBccEmailMap();
+
+		if (bccEmailMap != null) {
+			for (Map.Entry<String, String> entry : bccEmailMap.entrySet()) {
+				email.addBcc(entry.getKey(), entry.getValue(), "utf-8");
+			}
+		}
+	}
+
+	private void setAttachments(HtmlEmail email) throws EmailException {
+		List<EmailAttachment> attachments = getAttachments();
+
+		if (CollectionUtils.isNotEmpty(attachments)) {
+			for (EmailAttachment attachment : attachments) {
+				email.attach(attachment);
+			}
+		}
+	}
+
+	public void setEmail(Email email) throws EmailException {
+		email.setFrom(getFromEmail(), getFromName(), "utf-8");
+		setToEmails(email);
+		setCopyEmails(email);
+		setBccEmails(email);
+		email.setSubject(getSubject());
+	}
+
+	public SimpleEmail toSimpleEmail() throws EmailException {
+		SimpleEmail email = new SimpleEmail();
+		setEmail(email);
+		email.setMsg(getContent());
+		return email;
+	}
+
+	public HtmlEmail toHtmlEmail() throws EmailException {
+		HtmlEmail email = new HtmlEmail();
+		setEmail(email);
+		setAttachments(email);
+		email.setHtmlMsg(getContent());
+		return email;
+	}
+
+	public Email toEmail() throws EmailException {
+		if (isHtml()) {
+			return toHtmlEmail();
+		}
+
+		return toSimpleEmail();
 	}
 }

@@ -17,16 +17,16 @@ public class SendSimpleEmailTest extends BaseTest {
 		int port = Integer.valueOf(map.get("port"));
 		EmailHelper commonsEmailHelper = new EmailHelper(map.get("host"), port, map.get("userName"), map.get("password"));
 
-		Mail emailModel = new Mail();
-		emailModel.setFromEmail(map.get("fromEmail"));
-		emailModel.setToEmails(Arrays.asList(map.get("toEmails").split(",")));
-		emailModel.setCopyEmails(Arrays.asList(map.get("copyEmails").split(",")));
-		emailModel.setSubject("Test mail");
-		emailModel.setContent("Hello world!");
+		Mail mail = new Mail();
+		mail.setFromEmail(map.get("fromEmail"));
+		mail.setToEmails(Arrays.asList(map.get("toEmails").split(",")));
+		mail.setCopyEmails(Arrays.asList(map.get("copyEmails").split(",")));
+		mail.setSubject("Test mail");
+		mail.setContent("Hello world!");
 
 		try {
 			commonsEmailHelper.setDebug(true);
-			commonsEmailHelper.sendSimpleEmail(emailModel);
+			commonsEmailHelper.send(mail);
 		} catch (EmailException e) {
 			e.printStackTrace();
 		}
