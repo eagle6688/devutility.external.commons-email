@@ -56,7 +56,7 @@ public class EmailHelper {
 	}
 
 	public static EmailHelper create(Properties properties, String prefix) throws NumberFormatException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		EmailProperties emailProperties = PropertiesUtils.toModel(properties, prefix, EmailProperties.class);
+		EmailProperties emailProperties = PropertiesUtils.toObject(properties, prefix, EmailProperties.class);
 
 		if (emailProperties == null) {
 			return null;
